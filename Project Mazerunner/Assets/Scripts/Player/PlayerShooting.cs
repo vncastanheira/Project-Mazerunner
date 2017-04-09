@@ -18,6 +18,7 @@ public class PlayerShooting : NetworkBehaviour
     public Transform GunHole;
     public ParticleSystem plasmaExplosion;
     Camera playerCamera;
+    NetworkAnimator animator;
 
     BatteryManager manager;
 
@@ -25,6 +26,7 @@ public class PlayerShooting : NetworkBehaviour
     {
         playerCamera = GetComponentInChildren<Camera>();
         manager = GetComponent<BatteryManager>();
+        animator = GetComponent<NetworkAnimator>();
         _timer = Cooldown;
     }
 
@@ -91,6 +93,7 @@ public class PlayerShooting : NetworkBehaviour
         if (isLocalPlayer)
         {
             HasGun = true;
+            animator.SetTrigger("PickGun");
             PlayerCanvas.canvas.PickItem();
         }
     }
