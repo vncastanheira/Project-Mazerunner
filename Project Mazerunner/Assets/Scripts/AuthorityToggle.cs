@@ -9,11 +9,11 @@ using UnityEngine.Networking;
 /// </summary>
 public class AuthorityToggle : NetworkBehaviour
 {
-    public ToggleEvent OnLocalEnable;
-    public ToggleEvent OnLocalDisable;
+    public UnityBoolEvent OnLocalEnable;
+    public UnityBoolEvent OnLocalDisable;
 
-    public ToggleEvent OnRemoteEnable;
-    public ToggleEvent OnRemoteDisable;
+    public UnityBoolEvent OnRemoteEnable;
+    public UnityBoolEvent OnRemoteDisable;
 
     void Start()
     {
@@ -29,6 +29,3 @@ public class AuthorityToggle : NetworkBehaviour
         }
     }
 }
-
-[System.Serializable]
-public sealed class ToggleEvent : UnityEvent<bool> { }

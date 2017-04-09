@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
 
 [RequireComponent(typeof(BatteryManager))]
@@ -19,8 +20,10 @@ public class PlayerShooting : NetworkBehaviour
     public ParticleSystem plasmaExplosion;
     Camera playerCamera;
     NetworkAnimator animator;
-
     BatteryManager manager;
+
+    [Header("Events")]
+    public UnityEvent OnPickingGun;
 
     void Start()
     {
@@ -92,8 +95,8 @@ public class PlayerShooting : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            HasGun = true;
-            animator.SetTrigger("PickGun");
+            //HasGun = true;
+            OnPickingGun.Invoke();
             PlayerCanvas.canvas.PickItem();
         }
     }
