@@ -26,7 +26,7 @@ public class PlayerMain : NetworkBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         playerShooting = GetComponent<PlayerShooting>();
 
-        lightManager = GetComponentInChildren<LightManager>();
+        lightManager = GetComponent<LightManager>();
     }
 
     public override void OnStartClient()

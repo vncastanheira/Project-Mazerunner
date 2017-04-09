@@ -10,7 +10,7 @@ public class LightManager : NetworkLight
 
     private void Start()
     {
-        batteryManager = GetComponentInChildren<BatteryManager>();
+        batteryManager = GetComponent<BatteryManager>();
         flashLight = GetComponentInChildren<Light>();
     }
 

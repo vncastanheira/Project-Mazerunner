@@ -25,11 +25,12 @@ public class PlayerInteraction : NetworkBehaviour
         RaycastHit hit;
         Ray ray = new Ray(origin, direction);
 
-        if (Physics.Raycast(ray, out hit, 1.0f, InteractiveLayer, QueryTriggerInteraction.Collide))
+        if (Physics.Raycast(ray, out hit, 2.0f, InteractiveLayer, QueryTriggerInteraction.Collide))
         {
             var button = hit.collider.GetComponent<ButtonController>();
             if (button != null)
             {
+                Debug.Log("Button pressed!");
                 button.RpcPress();
             }
         }

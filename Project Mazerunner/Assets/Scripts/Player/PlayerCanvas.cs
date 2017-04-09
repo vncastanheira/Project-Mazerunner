@@ -31,7 +31,8 @@ public class PlayerCanvas : MonoBehaviour {
 
     public void SetBaterry(float value)
     {
-        battery.value = value;
+        if(battery != null)
+            battery.value = value;
     }
 
     public void Shoot()

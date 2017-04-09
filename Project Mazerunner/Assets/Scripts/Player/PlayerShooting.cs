@@ -16,13 +16,14 @@ public class PlayerShooting : NetworkBehaviour
 
     [Header("References")]
     public Transform GunHole;
-    public Camera playerCamera;
     public ParticleSystem plasmaExplosion;
+    Camera playerCamera;
 
     BatteryManager manager;
 
     void Start()
     {
+        playerCamera = GetComponentInChildren<Camera>();
         manager = GetComponent<BatteryManager>();
         _timer = Cooldown;
     }
