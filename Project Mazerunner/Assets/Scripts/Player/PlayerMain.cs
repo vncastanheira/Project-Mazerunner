@@ -12,20 +12,20 @@ public class PlayerMain : NetworkBehaviour
     [Header("Events")]
     public UnityEvent OnDeath;
 
-    [Header("Components")]
-    public VisibleFrame FrameAnimation;
-    public NetworkAnimator NetAnimator;
+#region Components
+    NetworkAnimator animator;
     PlayerLook playerLook;
     PlayerMovement playerMovement;
     PlayerShooting playerShooting;
     LightManager lightManager;
+#endregion
 
     private void Start()
     {
         playerLook = GetComponent<PlayerLook>();
         playerMovement = GetComponent<PlayerMovement>();
         playerShooting = GetComponent<PlayerShooting>();
-
+        animator = GetComponent<NetworkAnimator>();
         lightManager = GetComponent<LightManager>();
     }
 
@@ -59,8 +59,7 @@ public class PlayerMain : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            FrameAnimation.isAlive = false;
-            NetAnimator.animator.SetBool("Alive", false);
+            animator.animator.SetBool("Alive", false);
             PlayerCanvas.canvas.Died();
         }
     }
