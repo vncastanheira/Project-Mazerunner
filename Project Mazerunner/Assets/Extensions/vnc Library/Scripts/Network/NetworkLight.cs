@@ -5,7 +5,7 @@ namespace vnc.Network
 {
     public class NetworkLight : NetworkBehaviour
     {
-        [SerializeField, HideInInspector] protected Light flashLight;
+        [SerializeField] public Light flashLight;
         [SerializeField, SyncVar] bool lightOn;
         [Range(0.0f, 8.0f)] public float MaxIntensity;
         public string ButtonCommand;

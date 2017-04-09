@@ -6,12 +6,11 @@ using vnc.Network;
 [RequireComponent(typeof(BatteryManager))]
 public class LightManager : NetworkLight
 {
-    [SerializeField] BatteryManager batteryManager;
+    [SerializeField, HideInInspector] BatteryManager batteryManager;
 
-    private void Start()
+    void Start()
     {
         batteryManager = GetComponent<BatteryManager>();
-        flashLight = GetComponentInChildren<Light>();
     }
 
     public void UpdateLocal()
