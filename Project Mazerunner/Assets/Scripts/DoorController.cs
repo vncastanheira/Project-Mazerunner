@@ -29,10 +29,9 @@ public class DoorController : NetworkBehaviour
                 Open();
                 break;
             case DoorType.Numbered:
+                _count++;
                 if (_count >= TotalCount)
                     Open();
-                else
-                    _count++;
 
                 break;
             default:
