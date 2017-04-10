@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 
@@ -7,9 +6,11 @@ using UnityEngine.Networking;
 public class BatteryManager : NetworkBehaviour
 {
     [Header("Battery Settings")]
-    [SerializeField, Range(0, 1000)] public float MaxBatteryLife = 100.0f;
+    [SerializeField, Range(0, 1000)]
+    public float MaxBatteryLife = 100.0f;
     [SerializeField, SyncVar] float batteryLife;
-    //[SerializeField, SyncVar(hook = "OnHealthChanged")] float batteryLife;
+    [SerializeField, SyncVar] int batteryStock = 0;
+    public string ChargeCommand;
 
     public float BatteryLife
     {
@@ -32,15 +33,26 @@ public class BatteryManager : NetworkBehaviour
         batteryLife = MaxBatteryLife;
     }
 
-    void Update()
+    public void UpdateLocal()
     {
         if (isLocalPlayer)
         {
+            if (Input.GetButtonDown(ChargeCommand))
+            {
+                if (batteryStock > 0)
+                {
+                    RpcCharge();
+                }
+                else
+                {
+                    Debug.Log("No stored battery");
+                }
+            }
             PlayerCanvas.canvas.SetBaterry(batteryLife);
         }
     }
 
-#region Update
+    #region Update
 
     [Command]
     public void CmdUpdateBattery(bool isUsing, float deltaTime)
@@ -55,11 +67,11 @@ public class BatteryManager : NetworkBehaviour
     [ClientRpc]
     public void RpcUpdateBaterry(bool isUsing, float deltaTime)
     {
-        if(isUsing)
+        if (isUsing)
             batteryLife -= deltaTime;
     }
 
-#endregion
+    #endregion
 
     [Command]
     public void CmdUseBattery(float value)
@@ -74,6 +86,38 @@ public class BatteryManager : NetworkBehaviour
     public void RpcUseBattery(float value)
     {
         batteryLife -= value;
+    }
+
+    /// <summary>
+    /// Store a battery from the map
+    /// </summary>
+    [ClientRpc]
+    public void RpcAddStock(int quantity)
+    {
+        if (isLocalPlayer)
+        {
+            batteryStock += quantity;
+            PlayerCanvas.canvas.UpdateBatteryStock(batteryStock);
+            PlayerCanvas.canvas.PickItem();
+        }
+    }
+
+    /// <summary>
+    /// Charge your battery from a battery stored
+    /// </summary>
+    [ClientRpc]
+    public void RpcCharge()
+    {
+        if (isLocalPlayer)
+        {
+            if (batteryStock > 0)
+            {
+                batteryStock--;
+                batteryLife = 100;
+                PlayerCanvas.canvas.UseBatteryStock();
+                PlayerCanvas.canvas.UpdateBatteryStock(batteryStock);
+            }
+        }
     }
 
 }

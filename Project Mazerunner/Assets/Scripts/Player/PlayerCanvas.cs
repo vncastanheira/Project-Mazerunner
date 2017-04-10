@@ -1,13 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerCanvas : MonoBehaviour {
 
     public static PlayerCanvas canvas;
 
+    [Header("Battery Slider")]
     [SerializeField] Slider battery;
+
+    [Header("Battery Stock")]
+    public string Label;
+    [SerializeField] Text stockValue; 
     Animator animator;
 
     void Awake()
@@ -28,11 +31,20 @@ public class PlayerCanvas : MonoBehaviour {
         animator.SetTrigger("Start");
     }
 
-
     public void SetBaterry(float value)
     {
         if(battery != null)
             battery.value = value;
+    }
+
+    public void UpdateBatteryStock(int stock)
+    {
+        stockValue.text = Label + " " + stock;
+    }
+
+    public void UseBatteryStock()
+    {
+        animator.SetTrigger("UseBattery");
     }
 
     public void Shoot()

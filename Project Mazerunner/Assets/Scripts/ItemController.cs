@@ -19,6 +19,12 @@ public class ItemController : NetworkBehaviour
                 }
                 break;
             case ItemTypes.Battery:
+                var playerBattery = other.GetComponent<BatteryManager>();
+                if (playerBattery != null)
+                {
+                    playerBattery.RpcAddStock(1);
+                    NetworkServer.Destroy(gameObject);
+                }
                 break;
             default:
                 break;

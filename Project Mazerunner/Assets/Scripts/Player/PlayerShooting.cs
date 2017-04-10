@@ -90,6 +90,9 @@ public class PlayerShooting : NetworkBehaviour
 
     }
 
+    /// <summary>
+    /// Get a gun from the map
+    /// </summary>
     [ClientRpc]
     public void RpcGetGun()
     {
