@@ -18,8 +18,9 @@ public class PlayerShooting : NetworkBehaviour
     [Header("References")]
     public Transform GunHole;
     public ParticleSystem plasmaExplosion;
+    public ParticleSystem muzzleFlash;
     Camera playerCamera;
-    NetworkAnimator animator;
+    Animator animator;
     BatteryManager manager;
 
     [Header("Events")]
@@ -29,7 +30,7 @@ public class PlayerShooting : NetworkBehaviour
     {
         playerCamera = GetComponentInChildren<Camera>();
         manager = GetComponent<BatteryManager>();
-        animator = GetComponent<NetworkAnimator>();
+        animator = GetComponent<Animator>();
         _timer = Cooldown;
     }
 
@@ -54,6 +55,9 @@ public class PlayerShooting : NetworkBehaviour
             CmdShoot(GunHole.position, ray.direction);
             manager.CmdUseBattery(ChargeRequired);
             PlayerCanvas.canvas.Shoot();
+            muzzleFlash.Play(withChildren: true);
+            animator.Play("GunShoot");
+            Debug.Log("Shooting!");
             _timer = Cooldown;
         }
     }
