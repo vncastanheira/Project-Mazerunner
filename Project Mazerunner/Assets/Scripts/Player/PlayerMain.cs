@@ -19,6 +19,7 @@ public class PlayerMain : NetworkBehaviour
     PlayerShooting playerShooting;
     LightManager lightManager;
     BatteryManager batteryManager;
+    PlayerBanner playerBanner;
 #endregion
 
     private void Start()
@@ -29,6 +30,7 @@ public class PlayerMain : NetworkBehaviour
         animator = GetComponent<NetworkAnimator>();
         lightManager = GetComponent<LightManager>();
         batteryManager = GetComponent<BatteryManager>();
+        playerBanner = GetComponent<PlayerBanner>();
     }
 
     public override void OnStartClient()
@@ -45,6 +47,7 @@ public class PlayerMain : NetworkBehaviour
             playerShooting.UpdateLocal();
             lightManager.UpdateLocal();
             batteryManager.UpdateLocal();
+            playerBanner.UpdateLocal();
         }
     }
 
