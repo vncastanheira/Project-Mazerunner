@@ -29,7 +29,6 @@ public class DoorControllerEditor : Editor
     {
         EditorGUILayout.BeginVertical(EditorStyles.inspectorDefaultMargins);
         openParameter.stringValue = EditorGUILayout.TextField("Open Parameter", openParameter.stringValue);
-        closeParameter.stringValue = EditorGUILayout.TextField("Close Parameter", closeParameter.stringValue);
         EditorGUILayout.Space();
 
         EditorGUILayout.LabelField("Configurations", EditorStyles.boldLabel);
@@ -44,6 +43,7 @@ public class DoorControllerEditor : Editor
                 EditorGUILayout.HelpBox("Number of buttons that must be activated so the door can open.", MessageType.Info);
                 break;
             case DoorType.Timed:
+                closeParameter.stringValue = EditorGUILayout.TextField("Close Parameter", closeParameter.stringValue);
                 timer.floatValue = EditorGUILayout.FloatField("Timing", timer.floatValue);
                 totalCount.intValue = EditorGUILayout.IntField("Buttons", totalCount.intValue);
                 EditorGUILayout.HelpBox("A number of buttons need to be activated before time runs out.", MessageType.Info);
