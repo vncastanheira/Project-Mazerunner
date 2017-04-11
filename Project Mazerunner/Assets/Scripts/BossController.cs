@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine.AI;
 using UnityEngine.Networking;
 
 public class BossController : NetworkBehaviour
@@ -23,13 +20,12 @@ public class BossController : NetworkBehaviour
 
             if (goal != null)
                 agent.destination = goal.transform.position;
-            //RpcMove(goal.transform.position);
         }
     }
-
-    //[ClientRpc]
-    //void RpcMove(Vector3 position)
-    //{
-    //    agent.destination = position;
-    //}
+    
+    [Server]
+    public void Kill()
+    {
+        NetworkServer.Destroy(gameObject);
+    }
 }

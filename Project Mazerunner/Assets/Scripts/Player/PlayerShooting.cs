@@ -84,6 +84,11 @@ public class PlayerShooting : NetworkBehaviour
                     if (trap != null)
                         trap.RpcTrigger();
                     break;
+                case "Enemy":
+                    var boss = hit.collider.GetComponent<BossController>();
+                    if (boss != null)
+                        boss.Kill();
+                    break;
                 default:
                     break;
             }

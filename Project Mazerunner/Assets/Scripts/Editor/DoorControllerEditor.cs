@@ -12,6 +12,7 @@ public class DoorControllerEditor : Editor
     SerializedProperty totalCount;
     SerializedProperty timer;
     SerializedProperty onclose;
+    SerializedProperty onopen;
 
     private void OnEnable()
     {
@@ -23,6 +24,7 @@ public class DoorControllerEditor : Editor
         totalCount = serializedObject.FindProperty("TotalCount");
         timer = serializedObject.FindProperty("Timer");
         onclose = serializedObject.FindProperty("OnClose");
+        onopen = serializedObject.FindProperty("OnOpen");
     }
 
     public override void OnInspectorGUI()
@@ -53,7 +55,7 @@ public class DoorControllerEditor : Editor
             default:
                 break;
         }
-
+        EditorGUILayout.PropertyField(onopen);
 
         EditorGUILayout.EndVertical();
         serializedObject.ApplyModifiedProperties();

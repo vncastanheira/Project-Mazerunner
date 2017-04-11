@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 
@@ -8,8 +9,10 @@ using UnityEngine.Networking;
 public class DoorController : NetworkBehaviour
 {
     NetworkAnimator animator;
+    NavMeshObstacle obstacle;
     [SerializeField] public string OpenParameter;
-    [SerializeField] public string CloseParameter;
+    [SerializeField] public UnityEvent OnOpen;
+
 
     [Header("Configurations")]
     [SerializeField] public DoorType doorType;
@@ -23,6 +26,8 @@ public class DoorController : NetworkBehaviour
     [SerializeField] public float Timer;
     [SyncVar] float _timer = 0;
     [SyncVar] bool isOpen = false;
+
+    [SerializeField] public string CloseParameter;
     [SerializeField] public UnityEvent OnClose;
     #endregion
 
@@ -84,6 +89,7 @@ public class DoorController : NetworkBehaviour
     void Open()
     {
         animator.SetTrigger(OpenParameter);
+        OnOpen.Invoke();
         isOpen = true;
     }
 
