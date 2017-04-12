@@ -27,5 +27,6 @@ public class BossController : NetworkBehaviour
     public void Kill()
     {
         NetworkServer.Destroy(gameObject);
+        BossManager.instance.RestartTimer();
     }
 }
