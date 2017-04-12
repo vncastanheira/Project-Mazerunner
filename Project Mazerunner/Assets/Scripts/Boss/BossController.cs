@@ -130,7 +130,7 @@ public class BossController : NetworkBehaviour
     /// <summary> Check if the boss is near the goal </summary>
     bool DestinationReached()
     {
-        return agent.remainingDistance < 1;
+        return agent.remainingDistance < 0.5f;
     }
 
     [Server]
