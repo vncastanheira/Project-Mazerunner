@@ -1,10 +1,13 @@
-﻿using UnityEngine.AI;
+﻿using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Networking;
 
 public class BossController : NetworkBehaviour
 {
     NavMeshAgent agent;
-    PlayerMain goal;
+    Vector3 goal;
+    float _timer = 0;
+
 
     private void Start()
     {
@@ -15,18 +18,52 @@ public class BossController : NetworkBehaviour
     {
         if (isServer)
         {
-            if (goal == null)
-                goal = FindObjectOfType<PlayerMain>();
+            _timer -= Time.deltaTime;
+            if (_timer <= 0 || DestinationReached())
+            {
+                // Wander  around
+                goal = RandomDirection();
+                _timer = 60;
+            }
+
+            //if (goal == null)
+            //    goal = FindObjectOfType<PlayerMain>();
 
             if (goal != null)
-                agent.destination = goal.transform.position;
+                agent.destination = goal;
+
         }
     }
-    
+
+
+    Vector3 RandomDirection()
+    {
+        var randomDirection = Random.insideUnitSphere * 10;
+        randomDirection += transform.position;
+
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randomDirection, out navHit, 10, -1);
+
+        return navHit.position;
+    }
+
+    bool DestinationReached()
+    {
+        return agent.remainingDistance < 1;
+    }
+
     [Server]
     public void Kill()
     {
         NetworkServer.Destroy(gameObject);
         BossManager.instance.RestartTimer();
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(goal, Vector3.one);
     }
 }
