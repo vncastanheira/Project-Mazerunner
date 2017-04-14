@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Networking;
 
@@ -10,7 +12,7 @@ public class BossController : NetworkBehaviour
     public LayerMask PlayerLayer;
     public Transform Eyes;
     GameObject trackedPlayer;
-    PlayerMain[] totalPlayers;
+    List<PlayerMain> totalPlayers;
 
     [Header("Configurations")]
     public float Timer;
@@ -22,7 +24,7 @@ public class BossController : NetworkBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        totalPlayers = FindObjectsOfType<PlayerMain>();
+        totalPlayers = FindObjectsOfType<PlayerMain>().ToList();
     }
 
     private void Update()
@@ -99,10 +101,10 @@ public class BossController : NetworkBehaviour
     /// <summary> Try to find a random position near the players </summary>
     Vector3 RandomInPlayersArea()
     {
-        if (totalPlayers == null || totalPlayers.Length == 0)
+        if (totalPlayers == null || totalPlayers.Count == 0)
             return RandomDirection(transform.position);
 
-        switch (totalPlayers.Length)
+        switch (totalPlayers.Count)
         {
             case 1:
                 return RandomDirection(totalPlayers[0].transform.position);
@@ -117,8 +119,8 @@ public class BossController : NetworkBehaviour
                 var midPoint = (p1b + p2b + p3b) / 3;
                 return RandomDirection(midPoint);
             case 4:
-                int i1 = Random.Range(0, totalPlayers.Length);
-                int i2 = Random.Range(0, totalPlayers.Length);
+                int i1 = Random.Range(0, totalPlayers.Count);
+                int i2 = Random.Range(0, totalPlayers.Count);
                 var p1c = totalPlayers[i1].transform.position;
                 var p2c = totalPlayers[i2].transform.position;
                 return RandomDirection(Vector3.Lerp(p1c, p2c, 0.5f));

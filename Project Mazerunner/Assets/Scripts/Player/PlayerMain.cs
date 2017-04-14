@@ -88,6 +88,7 @@ public class PlayerMain : NetworkBehaviour
     {
         var spectate = GameObject.FindGameObjectWithTag("Spectate");
         spectate.GetComponent<Camera>().enabled = true;
+        PlayerCanvas.canvas.Escaped();
         CmdDestroy();
     }
 

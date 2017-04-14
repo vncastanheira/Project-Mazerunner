@@ -16,6 +16,9 @@ public class PlayerCanvas : MonoBehaviour {
     [Header("Splash")]
     public CanvasRenderer Splash;
 
+    [Space(10)]
+    public Text EscapedText;
+
     void Awake()
     {
         if (canvas == null)
@@ -67,6 +70,6 @@ public class PlayerCanvas : MonoBehaviour {
 
     public void Escaped()
     {
-
+        EscapedText.gameObject.SetActive(true);
     }
 }
