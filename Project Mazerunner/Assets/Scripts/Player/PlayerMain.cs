@@ -12,7 +12,7 @@ public class PlayerMain : NetworkBehaviour
     [Header("Events")]
     public UnityEvent OnDeath;
 
-#region Components
+    #region Components
     NetworkAnimator animator;
     PlayerLook playerLook;
     PlayerMovement playerMovement;
@@ -20,7 +20,7 @@ public class PlayerMain : NetworkBehaviour
     LightManager lightManager;
     BatteryManager batteryManager;
     PlayerBanner playerBanner;
-#endregion
+    #endregion
 
     private void Start()
     {
@@ -49,6 +49,15 @@ public class PlayerMain : NetworkBehaviour
             batteryManager.UpdateLocal();
             playerBanner.UpdateLocal();
         }
+
+        if (isServer)
+        {
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                var networkManager = FindObjectOfType<NetworkManager>();
+                networkManager.ServerChangeScene("Multiplayer");
+            }
+        }
     }
 
     #region Death
@@ -70,5 +79,22 @@ public class PlayerMain : NetworkBehaviour
         }
     }
 
-#endregion
+    #endregion
+
+    #region Escape
+
+    [ClientRpc]
+    public void RpcEscape()
+    {
+        var spectate = GameObject.FindGameObjectWithTag("Spectate");
+        spectate.GetComponent<Camera>().enabled = true;
+        CmdDestroy();
+    }
+
+    [Command]
+    public void CmdDestroy()
+    {
+        NetworkServer.Destroy(gameObject);
+    }
+    #endregion
 }

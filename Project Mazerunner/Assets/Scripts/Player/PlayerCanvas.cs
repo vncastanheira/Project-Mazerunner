@@ -13,6 +13,9 @@ public class PlayerCanvas : MonoBehaviour {
     [SerializeField] Text stockValue; 
     Animator animator;
 
+    [Header("Splash")]
+    public CanvasRenderer Splash;
+
     void Awake()
     {
         if (canvas == null)
@@ -60,5 +63,10 @@ public class PlayerCanvas : MonoBehaviour {
     public void Died()
     {
         animator.SetTrigger("Die");
+    }
+
+    public void Escaped()
+    {
+
     }
 }
