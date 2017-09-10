@@ -5,7 +5,7 @@ namespace vnc.Network
 {
     public class NetworkLight : NetworkBehaviour
     {
-        [SerializeField] public Light flashLight;
+        [SerializeField] Light flashLight;
         [SerializeField, SyncVar] bool lightOn;
         [Range(0.0f, 8.0f)] public float MaxIntensity;
         public string ButtonCommand;
@@ -16,15 +16,22 @@ namespace vnc.Network
             {
                 return lightOn;
             }
+        }
 
-            set
+        public virtual void UpdateLight()
+        {
+            if (!isLocalPlayer)
+                return;
+
+            if (Input.GetButtonDown(ButtonCommand))
             {
-                lightOn = value;
+                lightOn = !lightOn;
+                CmdToggleLights(lightOn);
             }
         }
 
         [Command]
-        public void CmdUpdateLight(bool isOn)
+        public void CmdToggleLights(bool isOn)
         {
             RpcSwitchLight(isOn);
         }

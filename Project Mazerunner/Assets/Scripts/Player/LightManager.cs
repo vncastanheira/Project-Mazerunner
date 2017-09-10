@@ -12,22 +12,4 @@ public class LightManager : NetworkLight
     {
         batteryManager = GetComponent<BatteryManager>();
     }
-
-    public void UpdateLocal()
-    {
-        batteryManager.CmdUpdateBattery(isLightOn, Time.deltaTime);
-
-        if (batteryManager.HasCharge)
-        {
-            if (Input.GetButtonDown(ButtonCommand))
-            {
-                isLightOn = !isLightOn;
-            }
-        }
-        else
-        {
-            isLightOn = false;
-        }
-        CmdUpdateLight(isLightOn);
-    }
 }

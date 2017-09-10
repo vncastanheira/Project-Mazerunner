@@ -45,7 +45,6 @@ public class PlayerMain : NetworkBehaviour
             playerLook.UpdateLocal();
             playerMovement.UpdateLocal();
             playerShooting.UpdateLocal();
-            lightManager.UpdateLocal();
             batteryManager.UpdateLocal();
             playerBanner.UpdateLocal();
         }
